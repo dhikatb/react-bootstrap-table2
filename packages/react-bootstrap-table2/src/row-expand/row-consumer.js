@@ -9,7 +9,7 @@ export default Component => {
   const renderWithExpansion = (props, expandRow) => {
     let parentClassName = "";
     let className = "";
-    let transitionTimeout = expandRow.transitionTimeout || 400;
+    const transitionTimeout = expandRow.transitionTimeout || 400;
     const key = props.value;
 
     const expanded = _.contains(expandRow.expanded, key);
