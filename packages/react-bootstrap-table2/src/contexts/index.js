@@ -85,6 +85,12 @@ const withContext = Base =>
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
+      if (nextProps.columns.filter(col => col.sort).length <= 0) {
+        this.SortContext = null;
+      } else if (!this.SortContext) {
+        this.SortContext = createSortContext(
+          dataOperator, this.isRemoteSort, this.handleRemoteSortChange);
+      }
       if (!nextProps.pagination && this.props.pagination) {
         this.PaginationContext = null;
       }
@@ -247,6 +253,7 @@ const withContext = Base =>
           ref={ n => this.sortContext = n }
           defaultSorted={ this.props.defaultSorted }
           defaultSortDirection={ this.props.defaultSortDirection }
+          sort={ this.props.sort }
           data={ rootProps.getData(filterProps, searchProps) }
         >
           <this.SortContext.Consumer>

@@ -83,7 +83,9 @@ class BootstrapTable extends PropsBaseResolver(Component) {
 
     const hasFooter = _.filter(columns, col => _.has(col, 'footer')).length > 0;
 
-    const tableCaption = (caption && <Caption>{ caption }</Caption>);
+    const tableCaption = (
+      caption && <Caption bootstrap4={ bootstrap4 }>{ caption }</Caption>
+    );
 
     return (
       <div className={ tableWrapperClass }>
@@ -92,9 +94,11 @@ class BootstrapTable extends PropsBaseResolver(Component) {
           <Header
             columns={ columns }
             className={ this.props.headerClasses }
+            wrapperClasses={ this.props.headerWrapperClasses }
             sortField={ this.props.sortField }
             sortOrder={ this.props.sortOrder }
             onSort={ this.props.onSort }
+            globalSortCaret={ this.props.sort && this.props.sort.sortCaret }
             onFilter={ this.props.onFilter }
             currFilters={ this.props.currFilters }
             onExternalFilter={ this.props.onExternalFilter }
@@ -111,9 +115,12 @@ class BootstrapTable extends PropsBaseResolver(Component) {
               currFilters={ this.props.currFilters }
               filterPosition={ this.props.filterPosition }
               onExternalFilter={ this.props.onExternalFilter }
+              selectRow={ selectRow }
+              expandRow={ expandRow }
             />
           )}
           <Body
+            className={ this.props.bodyClasses }
             data={ this.getData() }
             keyField={ keyField }
             tabIndexCell={ tabIndexCell }
@@ -158,7 +165,10 @@ BootstrapTable.propTypes = {
   tabIndexCell: PropTypes.bool,
   id: PropTypes.string,
   classes: PropTypes.string,
+  headerClasses: PropTypes.string,
+  bodyClasses: PropTypes.string,
   wrapperClasses: PropTypes.string,
+  headerWrapperClasses: PropTypes.string,
   condensed: PropTypes.bool,
   caption: PropTypes.oneOfType([
     PropTypes.node,
@@ -216,7 +226,6 @@ BootstrapTable.propTypes = {
   rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   rowEvents: PropTypes.object,
   rowClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  headerClasses: PropTypes.string,
   filtersClasses: PropTypes.string,
   filterPosition: PropTypes.oneOf([
     Const.FILTERS_POSITION_TOP,
@@ -228,6 +237,12 @@ BootstrapTable.propTypes = {
     dataField: PropTypes.string.isRequired,
     order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]).isRequired
   })),
+  sort: PropTypes.shape({
+    dataField: PropTypes.string,
+    order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
+    sortFunc: PropTypes.func,
+    sortCaret: PropTypes.func
+  }),
   defaultSortDirection: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
   overlay: PropTypes.func,
   onTableChange: PropTypes.func,

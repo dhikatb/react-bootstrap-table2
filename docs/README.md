@@ -21,6 +21,7 @@
 * [classes](#classes)
 * [wrapperClasses](#wrapperClasses)
 * [headerClasses](#headerClasses)
+* [headerWrapperClasses](#headerWrapperClasses)
 * [cellEdit](#cellEdit)
 * [selectRow](#selectRow)
 * [expandRow](#expandRow)
@@ -28,6 +29,7 @@
 * [rowClasses](#rowClasses)
 * [rowEvents](#rowEvents)
 * [hiddenRows](#hiddenRows)
+* [sort](#sort)
 * [defaultSorted](#defaultSorted)
 * [defaultSortDirection](#defaultSortDirection)
 * [pagination](#pagination)
@@ -136,6 +138,9 @@ Customize class on the outer element which wrap up the `table` element.
 ### <a name='headerClasses'>headerClasses - [String]</a>
 Customize class on the header row(`tr`). 
 
+### <a name='headerWrapperClasses'>headerWrapperClasses - [String]</a>
+Customize class on the `thead`. 
+
 ### <a name='cellEdit'>cellEdit - [Object]</a>
 Makes table cells editable, please see [cellEdit definition](./cell-edit.md) for more detail.
 
@@ -197,6 +202,27 @@ Hide rows, this props accept an array of row keys:
 ```js
 const hiddenRows = [1, 4];
 <BootstrapTable data={ data } columns={ columns } hiddenRows={ hiddenRows } />
+```
+
+### <a name='sort'>sort - [Object]</a>
+Two cases you probably need to configure `sort` prop:
+
+#### Manage sorting state
+You can give `dataField` and `order` to specify the sorting state in table, For example
+
+```js
+<BootstrapTable sort={ { dataField: 'price', order: 'asc' } }>
+```
+
+#### One-time sorting configuration
+In earily version, we only can configure [`sortCaret`](./columns.md#sortCaret) and [`sortFunc` ](./columns.md#sortFunc) per column. But they are same in most of cases.   
+So here we give you a chance to just setup these prop in one time.
+
+```js
+<BootstrapTable sort={ {
+  sortCaret: ...
+  sortFunc: ...
+} }>
 ```
 
 ### <a name='defaultSorted'>defaultSorted - [Array]</a>
